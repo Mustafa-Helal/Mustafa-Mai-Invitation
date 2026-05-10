@@ -9,104 +9,51 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
-    <style>
-        :root {
-            --dark-petrol: #052c39;
-            --emerald-petrol: #074d5e;
-            --light-petrol: #118ab2;
-            --silver: #cfd8dc;
-            --paper: #e0f2f1;
-        }
-        * {
-        -webkit-user-select: none; /* Safari */
-        -moz-user-select: none;    /* Firefox */
-        -ms-user-select: none;     /* IE/Edge */
-        user-select: none;         /* Standard */
-        }
-        body {
-            background: radial-gradient(circle at center, var(--emerald-petrol) 0%, var(--dark-petrol) 100%);
-            background-attachment: fixed;
-            color: white;
-            font-family: 'Cairo', sans-serif;
-            overflow-x: hidden;
-            overflow-y: hidden;
-        }
+   /* Envelope Wrapper - جعلناه مرن */
+.envelope-wrapper { 
+    position: relative; 
+    width: 90%; /* بدلاً من 320px ثابتة */
+    max-width: 320px; 
+    height: 200px; 
+    background: #031d25; 
+    transition: 0.4s; 
+    box-shadow: 0 30px 60px rgba(0,0,0,0.6); 
+}
 
-        .font-serif { font-family: 'Playfair Display', serif; }
-        .font-script { font-family: 'Great Vibes', cursive; }
+/* الجواب داخل الظرف */
+.letter { 
+    position: absolute; 
+    bottom: 5px; 
+    left: 5%; 
+    width: 90%; /* ليكون متناسق مع حجم الظرف */
+    height: 180px; 
+    background: var(--paper); 
+    color: var(--dark-petrol); 
+    padding: 20px; 
+    text-align: center; 
+    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+    z-index: 20; 
+    border-radius: 5px; 
+}
 
-        /* Background Pattern */
-        body::before {
-            content: "";
-            position: fixed;
-            inset: 0;
-            background-image: radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
-            z-index: -1;
-        }
+/* صورة العرسان - جعلناها تصغر في الموبايل */
+.oval-frame {
+    width: 260px; /* أصغر شوية للموبايل */
+    height: 380px; 
+    border-radius: 150px;
+    border: 2px solid var(--silver); 
+    padding: 10px;
+    position: relative; 
+    z-index: 10;
+}
 
-        /* --- الجواب الأصلي (رجعنا للتصميم اللي عجبك) --- */
-        #hero-intro { 
-            position: fixed; inset: 0; display: flex; flex-direction: column; 
-            align-items: center; justify-content: center; z-index: 100; 
-            transition: 0.8s ease-in-out;
-            background: radial-gradient(circle, #0a4d61 0%, #052c39 100%);
-        }
-        
-        .envelope-wrapper { position: relative; width: 320px; height: 200px; background: #031d25; transition: 0.4s; box-shadow: 0 30px 60px rgba(0,0,0,0.6); }
-        .envelope-wrapper::before { 
-            content: ''; position: absolute; top: 0; left: 0; width: 0; height: 0; 
-            border-style: solid; border-width: 110px 160px 0 160px; 
-            border-color: #0d5a6e transparent transparent transparent; 
-            z-index: 30; transition: transform 0.6s ease-in-out; transform-origin: top; 
-        }
-        .envelope-wrapper.step-1::before { transform: rotateX(180deg); z-index: 10; }
-        
-        .envelope-wrapper::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 0; border-style: solid; border-width: 0 160px 100px 160px; border-color: transparent transparent #083a4a transparent; z-index: 40; }
-        .envelope-sides { position: absolute; top: 0; left: 0; width: 0; height: 0; border-style: solid; border-width: 100px 0 100px 160px; border-color: transparent transparent transparent #0a4d61; z-index: 40; }
-        .envelope-sides::after { content: ''; position: absolute; top: -100px; right: -160px; width: 0; height: 0; border-style: solid; border-width: 100px 160px 100px 0; border-color: transparent #0a4d61 transparent transparent; }
-
-        .letter { 
-            position: absolute; bottom: 5px; left: 10px; width: 300px; height: 180px; 
-            background: var(--paper); color: var(--dark-petrol); padding: 20px; text-align: center; 
-            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 20; border-radius: 5px; 
-        }
-        .envelope-wrapper.step-1 .letter { transform: translateY(-110px); z-index: 45; }
-
-        .wax-seal { 
-            position: absolute; top: 80px; left: 50%; transform: translateX(-50%); 
-            width: 65px; height: 65px; background: radial-gradient(circle, var(--light-petrol), var(--emerald-petrol)); 
-            border-radius: 50%; z-index: 60; cursor: pointer; display: flex; align-items: center; justify-content: center; 
-            font-family: 'Great Vibes'; color: white; font-size: 24px; border: 2px solid var(--light-petrol);
-        }
-
-        /* --- الموقع والمحتوى --- */
-        #main-content { display: none; opacity: 0; }
-        .show-site #hero-intro { opacity: 0; visibility: hidden; transform: translateY(-100%); }
-        .show-site #main-content { display: block; opacity: 1; }
-
-        .oval-frame {
-            width: 300px; height: 450px; border-radius: 150px;
-            border: 2px solid var(--silver); padding: 12px;
-            position: relative; z-index: 10;
-        }
-        .oval-frame img { width: 100%; height: 100%; object-fit: cover; border-radius: 140px; }
-
-        .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: 0.4s;
-        }
-        .glass-card:hover { border-color: var(--silver); transform: translateY(-10px); background: rgba(255, 255, 255, 0.07); }
-
-        .timeline-line {
-            position: absolute; left: 50%; transform: translateX(-50%); width: 1px;
-            background: linear-gradient(to bottom, transparent, var(--silver), transparent);
-            height: 100%;
-        }
-        .timer-box { min-width: 80px; text-align: center; }
-    </style>
+/* في الشاشات الكبيرة نكبر الصورة تاني */
+@media (min-width: 768px) {
+    .oval-frame {
+        width: 300px;
+        height: 450px;
+    }
+}
 </head>
 <body>
 
