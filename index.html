@@ -176,7 +176,7 @@
                 </div>
             </div>
         </div>
-        <p class="mt-12 text-[10px] text-gray-400 animate-pulse">إضغط على الختم لفتح الرسالة</p>
+        <p class="mt-12 text-[10px] text-gray-400 animate-pulse">Tap the seal to open the invitation</p>
     </div>
 
     <main id="main-content">
@@ -286,14 +286,18 @@
                     <h3 class="text-silver font-bold mb-2">Time</h3>
                     <p class="text-sm opacity-80">8:00 PM</p>
                 </div>
-                <div class="glass-card p-6 md:p-10 rounded-2xl" data-aos="fade-up" data-aos-delay="400">
-                    <h3 class="text-silver font-bold mb-2">WHERE</h3>
+            </div>
+                <!-- كارد المكان تحول لرابط مرن مع تأثير Hover انتقالي متميز -->
+                <a href="https://maps.google.com" target="_blank" class="glass-card p-6 md:p-10 rounded-2xl block hover:scale-[1.03] transition-all duration-300 group" data-aos="fade-up" data-aos-delay="400">
+                    <h3 class="text-silver font-bold mb-2 group-hover:text-[#118ab2] transition-colors">WHERE</h3>
                     <p class="text-sm opacity-80">Lusail Hall - Le Passage</p>
-                </div>
+                    <span class="text-[10px] text-[#118ab2] block mt-2 underline opacity-0 group-hover:opacity-100 transition-opacity">View on Map📍</span>
+                </a>
+            </div>
             </div>
         </section>
             <footer class="py-6 text-center border-t border-white/5 opacity-40 hover:opacity-100 transition-opacity duration-300">
-            <p class="text-xs tracking-widest font-serif">Developed with ♥ by <span class="font-bold text-silver">Eng_Mustafa Helal</span></p>
+            <p class="text-xs tracking-widest font-serif">Developed by ♥  <span class="text-xs tracking-widest font-serif">Eng_Mustafa Helal</span></p>
         </footer>
         <audio id="weddingMusic" loop>
             <source src="audio/lila.mp3" type="audio/mpeg">
