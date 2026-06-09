@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title> Mustafa & Mai  | Wedding Invitation </title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght=0,400;0,700;1,400&family=Great+Vibes&family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Great+Vibes&family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
@@ -23,7 +23,7 @@
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
-            box-sizing: border-box;
+            box-sizing: border-box; /* تضمن حساب الـ padding جوه العرض الأصلي */
         }
 
         body {
@@ -31,14 +31,15 @@
             background-attachment: fixed;
             color: white;
             font-family: 'Cairo', sans-serif;
-            overflow-x: hidden; 
+            overflow-x: hidden; /* يمنع تماماً أي هزة أفقية يمين وشمال */
             width: 100%;
             min-height: 100vh;
         }
 
+        /* التحكم في السكرول لمنع هزة البداية */
         body.hide-scroll {
             overflow-y: hidden;
-            touch-action: none;
+            touch-action: none; /* يمنع السحب العشوائي على الموبايل أثناء غلق الجواب */
         }
         body.show-scroll {
             overflow-y: auto;
@@ -48,6 +49,7 @@
         .font-serif { font-family: 'Playfair Display', serif; }
         .font-script { font-family: 'Great Vibes', cursive; }
 
+        /* Background Pattern */
         body::before {
             content: "";
             position: fixed;
@@ -57,6 +59,7 @@
             z-index: -1;
         }
 
+        /* --- الجواب متجاوب تماماً --- */
         #hero-intro { 
             position: fixed; 
             inset: 0; 
@@ -70,6 +73,7 @@
             padding: 20px;
         }
         
+        /* جعل الجواب يصغر بحجم الشاشة بدون ما يبوظ */
         .envelope-container {
             max-width: 100%;
             perspective: 1000px;
@@ -85,7 +89,9 @@
         }
 
         @media (max-width: 360px) {
-            .envelope-wrapper { transform: scale(0.85); }
+            .envelope-wrapper {
+                transform: scale(0.85); /* تصغير الجواب للشاشات الصغيرة جداً جداً */
+            }
         }
 
         .envelope-wrapper::before { 
@@ -114,10 +120,12 @@
             font-family: 'Great Vibes'; color: white; font-size: 24px; border: 2px solid var(--light-petrol);
         }
 
+        /* --- الموقع والمحتوى --- */
         #main-content { display: none; opacity: 0; transition: opacity 0.5s ease-in; }
         .show-site #hero-intro { opacity: 0; visibility: hidden; transform: translateY(-100%); }
         .show-site #main-content { display: block; opacity: 1; }
 
+        /* جعل فريم الصورة مرن ومناسب للموبايل */
         .oval-frame {
             width: 280px; height: 420px; border-radius: 140px;
             border: 2px solid var(--silver); padding: 12px;
@@ -138,27 +146,14 @@
         }
         .glass-card:hover { border-color: var(--silver); transform: translateY(-5px); background: rgba(255, 255, 255, 0.07); }
 
-        /* تعديل التايم لاين لحفظ الهيكل الأفقي ومنع الهز الكلي للموقع */
-        .timeline-container {
-            width: 100%;
-            overflow-x: auto; /* يسمح بالسحب الجانبي اللطيف في الموبايل بدلاً من هز الموقع */
-            padding-bottom: 20px;
-            -webkit-overflow-scrolling: touch;
-        }
-        .timeline-wrapper-inner {
-            min-width: 700px; /* يحافظ على التنسيق يمين وشمال للشاشات الصغيرة */
-            position: relative;
-            padding: 0 20px;
-        }
-        @media (min-width: 768px) {
-            .timeline-container { overflow-x: visible; }
-            .timeline-wrapper-inner { min-width: auto; }
-        }
-
+        /* ضبط التايم لاين عشان ميعملش بروز بره الشاشة في الموبايل */
         .timeline-line {
-            position: absolute; left: 50%; transform: translateX(-50%); width: 1px;
+            position: absolute; right: 20px; transform: none; width: 2px;
             background: linear-gradient(to bottom, transparent, var(--silver), transparent);
             height: 100%;
+        }
+        @media (min-width: 768px) {
+            .timeline-line { left: 50%; right: auto; transform: translateX(-50%); width: 1px; }
         }
         .timer-box { min-width: 70px; text-align: center; }
         @media (min-width: 768px) { .timer-box { min-width: 80px; } }
@@ -185,6 +180,7 @@
     </div>
 
     <main id="main-content">
+        <!-- الـ Section الرئيسي: تم تعديل الـ padding والـ gaps لتكون متجاوبة -->
         <section class="min-h-screen flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12 px-6 py-12 md:py-20 max-w-7xl mx-auto">
             <div class="text-center md:text-right flex-1 w-full" data-aos="fade-left">
                 <h4 class="tracking-[0.3em] text-xs md:text-sm mb-4 opacity-80 text-silver uppercase">Save the Date</h4>
@@ -206,67 +202,70 @@
             </div>
         </section>
 
-        <!-- سيكشن اور استوري رجع افقي تماماً مع حماية السحب الجانبي -->
+        <!-- قسم قصة حبنا: تم تعديل الـ classes ليكون عمودياً تماماً في الموبايل ومريحاً للعين -->
         <section class="py-16 md:py-24 bg-black/10 relative overflow-hidden">
-            <h2 class="font-script text-4xl md:text-5xl text-silver text-center mb-16" data-aos="fade-up">Our Love Story</h2>
-            
-            <div class="timeline-container">
-                <div class="max-w-4xl mx-auto timeline-wrapper-inner">
-                    <div class="timeline-line"></div>
+            <h2 class="font-script text-4xl md:text-5xl text-silver text-center mb-12 md:text-center md:mb-20" data-aos="fade-up">Our Love Story</h2>
+            <div class="max-w-4xl mx-auto px-6 relative">
+                <div class="timeline-line"></div>
 
-                    <div class="flex flex-row-reverse items-center mb-20" data-aos="fade-right">
-                        <div class="w-1/2 pr-10 text-left">
-                            <span class="text-silver text-xs font-serif">26.08.2024</span>
-                            <h3 class="text-lg font-bold mb-2">First Meeting</h3>
-                            <p class="text-sm opacity-60">بداية الحكاية اللي مكنتش على البال...</p>
-                        </div>
-                        <div class="w-4 h-4 bg-silver rounded-full z-10 border-4 border-[#052c39]"></div>
-                        <div class="w-1/2"></div>
+                <!-- Event 1 -->
+                <div class="flex flex-col md:flex-row-reverse items-start md:items-center mb-12 md:mb-20 relative pr-8 md:pr-0" data-aos="fade-right">
+                    <div class="w-full md:w-1/2 md:pr-10 text-right md:text-left">
+                        <span class="text-silver text-xs font-serif">26.08.2024</span>
+                        <h3 class="text-base md:text-lg font-bold mb-1">First Meeting</h3>
+                        <p class="text-xs md:text-sm opacity-60">بداية الحكاية اللي مكنتش على البال...</p>
                     </div>
-                   
-                    <div class="flex items-center mb-20" data-aos="fade-left">
-                        <div class="w-1/2 pl-10 text-right">
-                            <span class="text-silver text-xs font-serif">01.11.2024</span>
-                            <h3 class="text-lg font-bold mb-2">Proposal</h3>
-                            <p class="text-sm opacity-60">اليوم اللي شاورنا فيه لبعض والقلب اختار.</p>
-                        </div>
-                        <div class="w-4 h-4 bg-silver rounded-full z-10 border-4 border-[#052c39]"></div>
-                        <div class="w-1/2"></div>
+                    <div class="absolute right-[11px] md:right-auto md:left-50% md:transform md:-translateX-50% w-4 h-4 bg-silver rounded-full z-10 border-4 border-[#052c39]"></div>
+                    <div class="hidden md:block w-1/2"></div>
+                </div>
+               
+                <!-- Event 2 -->
+                <div class="flex flex-col md:flex-row items-start md:items-center mb-12 md:mb-20 relative pr-8 md:pr-0" data-aos="fade-left">
+                    <div class="w-full md:w-1/2 md:pl-10 text-right">
+                        <span class="text-silver text-xs font-serif">01.11.2024</span>
+                        <h3 class="text-base md:text-lg font-bold mb-1">Proposal</h3>
+                        <p class="text-xs md:text-sm opacity-60">اليوم اللي شاورنا فيه لبعض والقلب اختار.</p>
                     </div>
+                    <div class="absolute right-[11px] md:right-auto md:left-50% md:transform md:-translateX-50% w-4 h-4 bg-silver rounded-full z-10 border-4 border-[#052c39]"></div>
+                    <div class="hidden md:block w-1/2"></div>
+                </div>
 
-                    <div class="flex flex-row-reverse items-center mb-20" data-aos="fade-right">
-                        <div class="w-1/2 pr-10 text-left">
-                            <span class="text-silver text-xs font-serif">15.11.2024</span>
-                            <h3 class="text-lg font-bold mb-2">The Fatiha ceremony</h3>
-                            <p class="text-sm opacity-60">أكبر إنجازاتي...</p>
-                        </div>
-                        <div class="w-4 h-4 bg-silver rounded-full z-10 border-4 border-[#052c39]"></div>
-                        <div class="w-1/2"></div>
+                <!-- Event 3 -->
+                <div class="flex flex-col md:flex-row-reverse items-start md:items-center mb-12 md:mb-20 relative pr-8 md:pr-0" data-aos="fade-right">
+                    <div class="w-full md:w-1/2 md:pr-10 text-right md:text-left">
+                        <span class="text-silver text-xs font-serif">15.11.2024</span>
+                        <h3 class="text-base md:text-lg font-bold mb-1">The Fatiha ceremony</h3>
+                        <p class="text-xs md:text-sm opacity-60">أكبر إنجازاتي...</p>
                     </div>
+                    <div class="absolute right-[11px] md:right-auto md:left-50% md:transform md:-translateX-50% w-4 h-4 bg-silver rounded-full z-10 border-4 border-[#052c39]"></div>
+                    <div class="hidden md:block w-1/2"></div>
+                </div>
 
-                    <div class="flex items-center mb-20" data-aos="fade-left">
-                        <div class="w-1/2 pl-10 text-right">
-                            <span class="text-silver text-xs font-serif">13.12.2024</span>
-                            <h3 class="text-lg font-bold mb-2">Engagement</h3>
-                            <p class="text-sm opacity-60">أعظم قرار ف حياتي .</p>
-                        </div>
-                        <div class="w-4 h-4 bg-silver rounded-full z-10 border-4 border-[#052c39]"></div>
-                        <div class="w-1/2"></div>
+                <!-- Event 4 -->
+                <div class="flex flex-col md:flex-row items-start md:items-center mb-12 md:mb-20 relative pr-8 md:pr-0" data-aos="fade-left">
+                    <div class="w-full md:w-1/2 md:pl-10 text-right">
+                        <span class="text-silver text-xs font-serif">13.12.2024</span>
+                        <h3 class="text-base md:text-lg font-bold mb-1">Engagement</h3>
+                        <p class="text-xs md:text-sm opacity-60">أعظم قرار ف حياتي .</p>
                     </div>
+                    <div class="absolute right-[11px] md:right-auto md:left-50% md:transform md:-translateX-50% w-4 h-4 bg-silver rounded-full z-10 border-4 border-[#052c39]"></div>
+                    <div class="hidden md:block w-1/2"></div>
+                </div>
 
-                    <div class="flex flex-row-reverse items-center mb-20" data-aos="fade-right">
-                        <div class="w-1/2 pr-10 text-left">
-                            <span class="text-silver text-xs font-serif">06.06.2026</span>
-                            <h3 class="text-lg font-bold mb-2">Katb El-Ketab</h3>
-                            <p class="text-sm opacity-60">مسك الختام ...</p>
-                        </div>
-                        <div class="w-4 h-4 bg-silver rounded-full z-10 border-4 border-[#052c39]"></div>
-                        <div class="w-1/2"></div>
+                <!-- Event 5 -->
+                <div class="flex flex-col md:flex-row-reverse items-start md:items-center mb-12 md:mb-20 relative pr-8 md:pr-0" data-aos="fade-right">
+                    <div class="w-full md:w-1/2 md:pr-10 text-right md:text-left">
+                        <span class="text-silver text-xs font-serif">06.06.2026</span>
+                        <h3 class="text-base md:text-lg font-bold mb-1">Katb El-Ketab</h3>
+                        <p class="text-xs md:text-sm opacity-60">مسك الختام ...</p>
                     </div>
+                    <div class="absolute right-[11px] md:right-auto md:left-50% md:transform md:-translateX-50% w-4 h-4 bg-silver rounded-full z-10 border-4 border-[#052c39]"></div>
+                    <div class="hidden md:block w-1/2"></div>
                 </div>
             </div>
         </section>
 
+        <!-- الجاليري: تم جعل الـ mt متناسق عشان الصور متدخلش في بعض في الشاشات الصغيرة -->
         <section class="py-16 md:py-24 px-6">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-6xl mx-auto">
                 <div class="h-48 md:h-64 glass-card p-2 rounded-xl" data-aos="flip-left"><img src="img/1.jpeg" class="w-full h-full object-cover rounded-lg" alt="Gallery 1"></div>
@@ -276,7 +275,7 @@
             </div>
         </section>
 
-        <!-- تفاصيل الفرح وتحويل اللوكيشن لرابط تفاعلي -->
+        <!-- تفاصيل الفرح -->
         <section class="py-16 md:py-24 px-6 bg-black/20 text-center">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-5xl mx-auto">
                 <div class="glass-card p-6 md:p-10 rounded-2xl" data-aos="fade-up">
@@ -287,20 +286,15 @@
                     <h3 class="text-silver font-bold mb-2">Time</h3>
                     <p class="text-sm opacity-80">8:00 PM</p>
                 </div>
-                <!-- كارد المكان تحول لرابط مرن مع تأثير Hover انتقالي متميز -->
-                <a href="https://maps.google.com" target="_blank" class="glass-card p-6 md:p-10 rounded-2xl block hover:scale-[1.03] transition-all duration-300 group" data-aos="fade-up" data-aos-delay="400">
-                    <h3 class="text-silver font-bold mb-2 group-hover:text-[#118ab2] transition-colors">WHERE</h3>
+                <div class="glass-card p-6 md:p-10 rounded-2xl" data-aos="fade-up" data-aos-delay="400">
+                    <h3 class="text-silver font-bold mb-2">WHERE</h3>
                     <p class="text-sm opacity-80">Lusail Hall - Le Passage</p>
-                    <span class="text-[10px] text-[#118ab2] block mt-2 underline opacity-0 group-hover:opacity-100 transition-opacity">اضغط لفتح الخريطة 📍</span>
-                </a>
+                </div>
             </div>
         </section>
-
-        <!-- فوتر التوقيع الفني الخاص بك -->
-        <footer class="py-6 text-center border-t border-white/5 opacity-40 hover:opacity-100 transition-opacity duration-300">
+            <footer class="py-6 text-center border-t border-white/5 opacity-40 hover:opacity-100 transition-opacity duration-300">
             <p class="text-xs tracking-widest font-serif">Developed with ♥ by <span class="font-bold text-silver">Eng_Mustafa Helal</span></p>
         </footer>
-
         <audio id="weddingMusic" loop>
             <source src="audio/lila.mp3" type="audio/mpeg">
         </audio>
@@ -320,6 +314,7 @@
         }
 
         function stepTwo() {
+            // كلاسات الـ Scroll الجديدة لمنع القفزة العنيفة للشاشة
             document.body.classList.remove('hide-scroll');
             document.body.classList.add('show-scroll');
             document.body.classList.add('show-site');
@@ -328,6 +323,7 @@
             setTimeout(() => { AOS.refresh(); }, 100);
         }
 
+        // --- العداد التنازلي المحدث ---
         const targetDate = new Date("Aug 07, 2026 20:00:00").getTime();
 
         const updateCountdown = () => {
@@ -352,6 +348,7 @@
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
+        // حماية الكود والصفحة
         document.addEventListener('contextmenu', (e) => e.preventDefault());
         document.onkeydown = function(e) {
             if (e.keyCode == 123) return false;
